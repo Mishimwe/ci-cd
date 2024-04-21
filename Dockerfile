@@ -14,4 +14,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 EXPOSE 5000
 
 # Commande pour exécuter l'application Flask lorsque le conteneur démarre
-CMD ["python", "app.py"]
+ENV FLASK_APP=app.py
+
+CMD ["flask", "run", "--host", "0.0.0.0"]
