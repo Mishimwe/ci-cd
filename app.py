@@ -1,10 +1,10 @@
 from flask import Flask
 
-app = Flask(name)
+app = Flask(__name__)
 
 @app.route('/')
 def entrypoint():
     return 'Hello World!'
 
-if name == '_main':
+if name == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
