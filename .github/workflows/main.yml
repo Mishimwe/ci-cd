@@ -1,0 +1,65 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+      
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      
+      - name: Build Flask Application
+        run: |
+          # Replace 'build.sh' with your actual build script
+          chmod +x build.sh
+          ./build.sh
+    
+  docker_build:
+    runs-on: ubuntu-latest
+    
+    needs: build
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      
+      - name: Build Docker Image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./Dockerfile
+          push: false
+          tags: Mishimwe7/minikube-flask-app:latest
+      
+  deploy_minikube:
+    runs-on: ubuntu-latest
+    
+    needs: docker_build
+    
+    steps:
+      - name: Start minikube
+        run: minikube start
+      
+      - name: Load Docker Image into minikube
+        run: eval $(minikube docker-env) && docker build -t your-docker-username/your-image-name:latest .
+      
+      - name: Deploy to minikube
+        run: kubectl apply -f your-kubernetes-manifest.yaml
