@@ -57,9 +57,12 @@ jobs:
     steps:
       - name: Start minikube
         run: minikube start
-      
+        
+      - name: Apply RBAC Configuration
+        run: kubectl apply -f rbac-config.yaml
+        
       - name: Load Docker Image into minikube
         run: eval $(minikube docker-env) && docker build -t Mishimwe7/minikube-flask-app:latest .
       
       - name: Deploy to minikube
-        run: kubectl apply -f your-kubernetes-manifest.yaml
+        run: kubectl apply -f ci-cd-deployment.yaml
