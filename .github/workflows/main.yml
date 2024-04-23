@@ -60,7 +60,7 @@ jobs:
         run: kubectl apply -f https://raw.githubusercontent.com/Mishimwe/ci-cd/main/rbac-config.yaml
         
       - name: Load Docker Image into minikube
-        run: eval $(minikube docker-env) && docker build -t Mishimwe7/minikube-flask-app:latest .
+        run: eval $(minikube docker-env) && docker build -t mishimwe7/minikube-flask-app:latest .
       
       - name: Deploy to minikube
-        run: kubectl apply -f ci-cd-deployment.yaml
+        run: kubectl apply -f https://raw.githubusercontent.com/Mishimwe/ci-cd/main/ci-cd-deployment.yaml
