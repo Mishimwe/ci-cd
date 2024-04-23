@@ -8,7 +8,7 @@ WORKDIR /app
 COPY . /app
 
 # Installez les dépendances Python
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r https://raw.githubusercontent.com/Mishimwe/ci-cd/main/requirements.txt
 
 # Exposez le port sur lequel l'application Flask fonctionne
 EXPOSE 5000
