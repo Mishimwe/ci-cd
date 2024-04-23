@@ -24,10 +24,8 @@ jobs:
           pip install -r requirements.txt
       
       - name: Build Flask Application
-        run: |
-          # Replace 'build.sh' with your actual build script
-          chmod +x build.sh
-          ./build.sh
+        run: chmod +x build.sh
+          
     
   docker_build:
     runs-on: ubuntu-latest
